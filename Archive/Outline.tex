@@ -1,0 +1,56 @@
+This is just here to write outline ideas, not for compiling into the main document.
+
+Abstract
+
+I. Introduction
+    A. IoT devices are important and there are bunches of them
+    B. Here's some similar work on locks and security in the IoT context
+    C. Here's our lock -
+        1. Basic description (model, capabilities, manufacturer, etc ...)
+II. Methodology - We intend to perform a security audit broken up into two, major categories: HW and SW
+    A. Hardware - What we will/have looked at:
+        1. PCB Layout
+        2. JTAG, UART (?), USB/Serial(?) connections
+        3. Removing conformal coating
+    B. Software - What we will/have looked at:
+        1. App behavior -
+            a. decompiling and examining using jadx
+            b. Examining locally-stored data
+            c. Permissions
+            d. Default to static super user password (pairing and admin passwords)
+        2. Bluetooth communication
+            a. Capturing first party data
+            b. Capturing third party data
+            c. attempting to understand the handshake
+            d. Attempting to fake the handshake
+            e. Attempting to understand the commands
+            f. Attempting to fake the commands
+III. Implementation (findings): failure all around
+    A. HW:
+    B. SW:
+        1. App
+            a.We decompiled.  It's obfuscated and our failure to dump the firmware made this impossible to disentangle
+            b. No relevant data appears to be 
+            c. Insecurity in default passwords not automatically changed. Should be unique from the factory.
+        2. BT
+            a. Examination of the handshake
+            b. Key insights into the communication
+                a. The passkey
+                b. the superuser key
+                c. various ATT/GATT handles
+                d. the advertising content filter byte changes
+                e. The bizarre pairing nature
+    C. Implementation
+        
+IV. Conclusion - our primary findings and future work
+    A. primary conclusions
+        1. Reverse engineering (mobile) communication really requires a strong, foundational knowledge of both sides of the communication.  Fundamentally, our inability to gather data about the system architecture and firmware behavior was a killer.
+        2. Regardless of our failure, there are apparent vulnerabilities in the BT implementation.
+            a. Total lack of documentation isn't a good sign: security through obscurity.
+            b. BT isn't implemented well here
+            c. A lot of non-standard behavior that an end-user would never notice
+        3. Conclusion about default admin pairing code and multiple access avenues. Usability still king. Applicable to other IoT devices, etc.
+    B. Future directions
+        1. Frida hooking
+        2. HW-level analysis of debugging interfaces
+        3. Android application to more fully control BT behavior.

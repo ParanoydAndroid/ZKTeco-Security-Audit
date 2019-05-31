@@ -1,0 +1,20 @@
+public static String get_Installmark(){
+    StringBuilder sb = new StringBuilder();
+    sb.append(Build.ID);
+    sb.append(Build.DISPLAY);
+    sb.append(Build.DEVICE);
+    sb.append(Build.MANUFACTURER);
+    sb.append(Build.BRAND);
+    sb.append(Build.MODEL);
+    sb.append(Build.SERIAL);
+    digest = getMD5(sb.toString());
+    
+    StringBuilder id = new StringBuilder();
+    for(int i : digest){
+        int j;
+        if(j < 0){ j+=256; }
+        if(j < 16){ id.append("0"); }
+        id.append(Integer.toHexString(j));
+    }
+    return id.toString().substring(8, 24);
+}
